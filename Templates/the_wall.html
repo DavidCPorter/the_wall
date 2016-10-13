@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>The Wall</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- linking a css style sheet -->
+  <link <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ark.css')}}">
+  <!-- linking a javascript file -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/my_script.js')}}"></script>
+</head>
+<body>
+  <div id='navbar'>
+    <span> Coding Dojo Wall </span>
+    <span id='welcome'> welcome {{name['first_name'], name['last_name']}}</span>
+    <form id='log_out' action='/logout' method='post'>
+      <input type='submit' value='Log off' />
+    </form>
+  </div>
+  <div id='page_body'>
+    <div id='post_message'>
+      <form action='/new_message' method='post'>
+        <textarea id='a_post' rows='3' name='message' placeholder='type here'></textarea>
+        <input type='submit' value='post message' />
+      </form>
+    </div>
+    <div id='message_body'>
+      {% for x in messages %}
+      <p>
+        {{x['message'], x[first_name], x[last_name], x[created_at], x[updated_at]}}
+      </p>
+      {% for y in comments %}
+      <p>
+        {{y['comment']}}
+      </p>
+      <form>
+        <input type='textarea' name='comment' />
+          <input type='submit' value='submit' >
+      </form>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
