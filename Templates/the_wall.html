@@ -17,7 +17,7 @@
       <input type='submit' value='Log off' />
     </form>
   </div>
-  <div id='page_body'>
+  <div class="main-content">
     <div id='post_message'>
       <form action='/new_message' method='post'>
         <textarea id='a_post' rows='3' name='message' placeholder='type here'></textarea>
@@ -27,7 +27,7 @@
     <div id='message_body'>
       {% for x in messages %}
       <p>
-        {{x['message'], x[first_name], x[last_name], x[created_at], x[updated_at]}}
+        {{x['message'], x['first_name'], x['last_name'], x['created_at'], x['updated_at']}}
       </p>
       {% for y in comments %}
       <p>
