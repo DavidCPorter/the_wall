@@ -12,8 +12,8 @@
 <body>
   <div id='navbar'>
     <span> Coding Dojo Wall </span>
-    <span id='welcome'> welcome {{name['first_name'], name['last_name']}}</span>
-    <form id='log_out' action='/logout' method='post'>
+    <span id='welcome'> welcome {{name['first_name']}} {{name['last_name']}}</span>
+    <form id='log_out' action='/logout'>
       <input type='submit' value='Log off' />
     </form>
   </div>
@@ -21,23 +21,35 @@
     <div id='post_message'>
       <form action='/new_message' method='post'>
         <textarea id='a_post' rows='3' name='message' placeholder='type here'></textarea>
-        <input type='submit' value='post message' />
+        <input type='submit' value='Post Message' />
       </form>
     </div>
     <div id='message_body'>
-      {% for x in messages %}
-      <p>
-        {{x['message'], x['first_name'], x['last_name'], x['created_at'], x['updated_at']}}
-      </p>
-      {% for y in comments %}
-      <p>
-        {{y['comment']}}
-      </p>
-      <form>
-        <input type='textarea' name='comment' />
-          <input type='submit' value='submit' >
-      </form>
+      {% for message in messages %}
+      <div>
+        <p id='message'>
+          <i>{{message['first_name']}} {{message['last_name']}} {{message['created_at']}}</i><br>
+          {{message['message']}}
+        </p>
+      </div>
+      {% for comment in comments %}
+        {% if comment['messages_id'] == message['id'] %}
+      <div>
+        <p id='comment'>
+          <i>{{comment['first_name']}} {{comment['last_name']}} {{comment['created_at']}}</i><br>
+          {{comment['comment']}}
+        </p>
+        <p>
+
+        </p>
+      </div>
+
+      {% endif %}
       {% endfor %}
+      <form id='form1' action='/comment/{{message['id']}}' method="post">
+        <textarea type='textarea' name='comment'></textarea>
+        <input type='submit' value='Post Comment' >
+      </form>
       {% endfor %}
     </div>
   </div>

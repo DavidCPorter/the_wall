@@ -71,24 +71,23 @@ def validate_user(form):
 
 @app.route('/the_wall/<current_id>')
 def show(current_id):
-    if session['logged_in'] == True:
+    if "logged_in" in session and session['logged_in'] == True:
 
         query1 = "SELECT * FROM users WHERE id = :current_id"
         data1 = {"current_id": current_id}
         name_query = mysql.query_db(query1, data1) #user id
 
-        query2 = "SELECT * from users LEFT JOIN messages ON users.id = messages.users_id1"
+        query2 = "SELECT * from users JOIN messages ON users.id = messages.users_id1"
         m_response = mysql.query_db(query2) #all_messages
 
-        query3 = "SELECT * from messages LEFT JOIN comments ON messages.users_comments_id1 = comments.messages_id"
+        query3 = "SELECT * from users JOIN comments ON users.id = comments.users_id"
         c_response = mysql.query_db(query3) #
-
-        return render_template('the_wall.html', messages=m_response, comments=c_response, name=name_query)
-
 
     else:
         flash('please login')
         return redirect('/')
+
+    return render_template('the_wall.html', messages=m_response, comments=c_response, name=name_query[0])
 
 @app.route('/new_message', methods=['POST'])
 def create():
@@ -104,5 +103,24 @@ def create():
     # Run query, with dictionary values injected into the query.
     mysql.query_db(query, data)
     return redirect('/the_wall/'+str(session['user']))
+
+@app.route('/comment/<message_id>', methods=['POST'])
+def comment(message_id):
+    comment = request.form['comment']
+
+    query = "INSERT INTO comments (comment, messages_id, users_id, created_at, updated_at) VALUES (:comment, :messages_id, :users_id, NOW(), NOW())"
+    data = {
+             'users_id': session['user'],
+             'comment': comment,
+             'messages_id': message_id,
+           }
+    # Run query, with dictionary values injected into the query.
+    mysql.query_db(query, data)
+    return redirect('/the_wall/'+str(session['user']))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 app.run(debug=True)

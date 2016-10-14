@@ -15,6 +15,48 @@ body {
   line-height: 1.5;
   background-color: #ffffff;
 }
+#navbar{
+  padding: 20px;
+}
+#form1{
+  height: auto;
+  margin: auto;
+  margin-right: 100px;
+  padding: 10px;
+  width: 100px;
+}
+#comment {
+  height: auto;
+  margin: auto;
+  margin-right: 100px;
+  padding: 10px;
+  width: 300px;
+  border-radius: .5em;
+  background-color: lightblue;
+}
+#message {
+  margin: auto;
+  margin-bottom: 30px;
+  height: auto;
+  width: 500px;
+  background-color: lightgrey;
+  padding: 10px;
+  border-radius: .5em;
+}
+#post_message{
+  margin: auto;
+  margin-bottom: 30px;
+  height: auto;
+  width: 500px;
+  padding: 10px;
+  border-radius: .5em;
+}
+#welcome {
+  float: right;
+  padding-top: 20px;
+  padding-right: 100px;
+  color: blue;
+}
 .wrapper {
   overflow: hidden;
   background-color: #fcfcfc;
